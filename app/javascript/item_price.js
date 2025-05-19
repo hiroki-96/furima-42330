@@ -1,12 +1,10 @@
-document.addEventListener('turbo:load', priceCalc);
-document.addEventListener('turbo:render', priceCalc);
-
-function priceCalc() {
+document.addEventListener('turbo:load', () => {
   const priceInput = document.getElementById('item-price');
 
   if (priceInput) {
     priceInput.addEventListener('input', () => {
       const inputValue = parseInt(priceInput.value);
+
       const taxDom = document.getElementById('add-tax-price');
       const profitDom = document.getElementById('profit');
 
@@ -21,4 +19,4 @@ function priceCalc() {
       }
     });
   }
-}
+});
