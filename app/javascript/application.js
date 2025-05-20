@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import Rails from "@rails/ujs"
 Rails.start()
+
 import "controllers"
 // app/javascript/application.js
 import "./item_price"
