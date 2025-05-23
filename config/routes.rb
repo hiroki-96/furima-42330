@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'items#index'
   resources :items
   resources :users, only: [:edit, :update]
+  resources :orders, only: [:new, :create]
 end
