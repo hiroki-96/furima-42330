@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   before_action :redirect_if_seller
 
   def new
-    @item = Item.find(params[:item_id])
   end
 
   def create
