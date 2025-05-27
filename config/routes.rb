@@ -4,6 +4,4 @@ Rails.application.routes.draw do
   resources :items do
     resources :orders, only: [:new, :create]
   end
-  resources :users, only: [:edit, :update] 
-
 end

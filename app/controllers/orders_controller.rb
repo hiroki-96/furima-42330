@@ -20,46 +20,45 @@ class OrdersController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-end
 
-private
+  private
 
-def set_item
-  @item = Item.find(params[:item_id])
-end
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
-def order_params
-  params.require(:order_address).permit(
-    :postal_code,
-    :prefecture_id,
-    :city,
-    :block,
-    :building,
-    :phone_number,
-    :token
-  ).merge(
-    user_id: current_user.id,
-    item_id: params[:item_id],
-    token: params[:token]
-  )
-end
+  def order_params
+    params.require(:order_address).permit(
+      :postal_code,
+      :prefecture_id,
+      :city,
+      :block,
+      :building,
+      :phone_number,
+      :token
+    ).merge(
+      user_id: current_user.id,
+      item_id: params[:item_id]
+    )
+  end
 
-def pay_item
-  Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-  item = Item.find(order_params[:item_id])
-  Payjp::Charge.create(
-    amount: item.price, # 商品の値段
-    card: order_params[:token], # カードトークン
-    currency: 'jpy' # 通貨の種類（日本円）
-  )
-end
+  def pay_item
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    item = Item.find(order_params[:item_id])
+    Payjp::Charge.create(
+      amount: item.price,
+      card: order_params[:token],
+      currency: 'jpy'
+    )
+  end
 
-def redirect_if_sold
-  redirect_to root_path if @item.order.present?
-end
+  def redirect_if_sold
+    redirect_to root_path if @item.order.present?
+  end
 
-def redirect_if_seller
-  return unless current_user.id == @item.user_id
+  def redirect_if_seller
+    return unless current_user.id == @item.user_id
 
-  redirect_to root_path
+    redirect_to root_path
+  end
 end
