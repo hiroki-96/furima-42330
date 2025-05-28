@@ -3,4 +3,4 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "card"
 // app/javascript/application.js
-import "./item_price"
+import "item_price"
